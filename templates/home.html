@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url("https://m.media-amazon.com/images/I/71oQvWsKKiL._SX679_.jpg");
+            background-repeat: no-repeat;
+            background-size:cover;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Churn Prediction</h1>
+        <form action="/predict" method="POST">
+            <!-- SeniorCitizen as Dropdown -->
+            <div class="form-group">
+                <label>Senior Citizen:</label>
+                <select name="SeniorCitizen" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <!-- Numeric Inputs -->
+            <div class="form-group">
+                <label>Monthly Charges ($):</label>
+                <input type="number" step="0.01" name="MonthlyCharges" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Total Charges ($):</label>
+                <input type="number" step="0.01" name="TotalCharges" class="form-control" required>
+            </div>
+
+            <!-- Categorical Inputs with Dropdowns -->
+            <div class="form-group">
+                <label>Gender:</label>
+                <select name="gender" class="form-control" required>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Partner:</label>
+                <select name="Partner" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Dependents:</label>
+                <select name="Dependents" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Phone Service:</label>
+                <select name="PhoneService" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Multiple Lines:</label>
+                <select name="MultipleLines" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No phone service">No phone service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Internet Service:</label>
+                <select name="InternetService" class="form-control" required>
+                    <option value="DSL">DSL</option>
+                    <option value="Fiber optic">Fiber optic</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Online Security:</label>
+                <select name="OnlineSecurity" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Online Backup:</label>
+                <select name="OnlineBackup" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Device Protection:</label>
+                <select name="DeviceProtection" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tech Support:</label>
+                <select name="TechSupport" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Streaming TV:</label>
+                <select name="StreamingTV" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Streaming Movies:</label>
+                <select name="StreamingMovies" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No internet service">No internet service</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Contract:</label>
+                <select name="Contract" class="form-control" required>
+                    <option value="Month-to-month">Month-to-month</option>
+                    <option value="One year">One year</option>
+                    <option value="Two year">Two year</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Paperless Billing:</label>
+                <select name="PaperlessBilling" class="form-control" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Method:</label>
+                <select name="PaymentMethod" class="form-control" required>
+                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                    <option value="Electronic check">Electronic check</option>
+                    <option value="Mailed check">Mailed check</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tenure Group:</label>
+                <select name="tenure_group" class="form-control" required>
+                    <option value="0-1 year">0-1 year</option>
+                    <option value="1-2 years">1-2 years</option>
+                    <option value="2-3 years">2-3 years</option>
+                    <option value="3-4 years">3-4 years</option>
+                    <option value="4-5 years">4-5 years</option>
+                    <option value="5-6 years">5-6 years</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Predict Churn</button>
+        </form>
+    </div>
+</body>
+</html>

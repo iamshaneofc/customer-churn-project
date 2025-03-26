@@ -1,0 +1,3 @@
+echo "churn_env/" > .gitignore
+echo "*.sav" >> .gitignore
+echo "*.pkl" >> .gitignore
